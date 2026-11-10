@@ -72,15 +72,13 @@ public class MainActivity extends AppCompatActivity {
 
         });
         share.setOnClickListener(view -> {
-            String pa =getApplicationContext().getPackageName();
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
-            String shareSubject=" ئەپڵیکەیشنی هەنبانە بۆرینە  \n  لەڕێگەی ئەم لینکەوە دایبەزێنە\n";
-            String shareBode =" ئەپڵیکەیشنی هەنبانە بۆرینە  \n  لەڕێگەی ئەم لینکەوە دایبەزێنە\n";
-            String shareBode1 ="https://play.google.com/store/apps/details?id="+pa;
-            shareIntent.putExtra(Intent.EXTRA_TEXT,shareBode+"\n"+shareBode1);
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT,shareSubject);
-            startActivity(Intent.createChooser(shareIntent,"share using"));
+            String shareSubject = "هەنبانە بۆرینە";
+            String shareBody = "هەنبانە بۆرینە";
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubject);
+            startActivity(Intent.createChooser(shareIntent, "share using"));
 
         });
 
