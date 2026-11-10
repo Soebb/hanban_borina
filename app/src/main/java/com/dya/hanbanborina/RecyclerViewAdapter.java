@@ -80,26 +80,47 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     /**
-     * Normalize Kurdish/Arabic-script text for forgiving dictionary search.
-     * Ignore tatweel and Unicode diacritic marks so users can find a word
-     * whether they type its vowel marks/diacritics or leave them out.
+     * Normalize text for forgiving dictionary search.
+     * Compatibility decomposition exposes Unicode characters that can be
+     * represented as a base character plus marks; all Unicode mark categories
+     * and tatweel are then ignored.
      */
     private String normalizeSearchText(String value) {
-        String normalized = Normalizer.normalize(value.toLowerCase(Locale.ROOT), Normalizer.Form.NFD);
+        String normalized = Normalizer.normalize(
+                value.toLowerCase(Locale.ROOT), Normalizer.Form.NFKD
+        );
         StringBuilder result = new StringBuilder(normalized.length());
 
-        for (int i = 0; i < normalized.length(); i++) {
-            char character = normalized.charAt(i);
-            int characterType = Character.getType(character);
+        for (int offset = 0; offset < normalized.length();) {
+            int codePoint = normalized.codePointAt(offset);
+            offset += Character.charCount(codePoint);
+            int characterType = Character.getType(codePoint);
 
-            if (character == '\u0640'
+            // Treat Sorani Kurdish letters with added marks as their
+            // unmarked counterparts. This intentionally allows some false matches.
+            switch (codePoint) {
+                case 0x0695: // ڕ -> ر (reh with small v)
+                    codePoint = 0x0631;
+                    break;
+                case 0x06B5: // ڵ -> ل (lam with small v)
+                    codePoint = 0x0644;
+                    break;
+                case 0x06CE: // ێ -> ی (yeh with small v)
+                    codePoint = 0x06CC;
+                    break;
+                case 0x06C6: // ۆ -> و (oe)
+                    codePoint = 0x0648;
+                    break;
+            }
+
+            if (codePoint == 0x0640
                     || characterType == Character.NON_SPACING_MARK
                     || characterType == Character.COMBINING_SPACING_MARK
                     || characterType == Character.ENCLOSING_MARK) {
                 continue;
             }
 
-            result.append(character);
+            result.appendCodePoint(codePoint);
         }
 
         return result.toString();
