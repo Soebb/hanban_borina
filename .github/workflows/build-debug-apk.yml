@@ -24,6 +24,15 @@ jobs:
           distribution: temurin
           java-version: '17'
 
+      # Keep the same debug certificate between workflow runs so new APKs
+      # can be installed as updates instead of being rejected as a signature
+      # mismatch. The cache is created on the first successful build.
+      - name: Restore persistent debug signing key
+        uses: actions/cache@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: android-debug-keystore-v1
+
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
