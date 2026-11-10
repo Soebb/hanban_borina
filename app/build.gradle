@@ -6,7 +6,8 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.dya.hanbanborina"
+        // Keep this ID unchanged in all future APK releases so they update this installation.
+        applicationId "com.soebb.hanbanborina"
         minSdk 26
         targetSdk 33
         versionCode 1
