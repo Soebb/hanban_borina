@@ -72,6 +72,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return aText1.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
     /**
      * Normalize only Kurdish/Arabic heh variants for dictionary search.
      * Other Kurdish letters and Unicode combining marks remain unchanged.
