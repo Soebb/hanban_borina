@@ -87,7 +87,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             switch (codePoint) {
                 case 0x06BE: // ھ -> ه
                 case 0x06C1: // ہ -> ه
-                case 0x06C2: // ۂ -> ه
                     codePoint = 0x0647;
                     break;
             }
