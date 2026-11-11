@@ -57,7 +57,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(
                     Context.CLIPBOARD_SERVICE
             );
-            ClipData clipData = ClipData.newPlainText("text", itemData.getText1() +"\\n"+itemData.getText2()+"\\n"+"\\n"+"#ئەپڵیکەیشنی_هەنبانەبۆرینە"+"\\n");
+            ClipData clipData = ClipData.newPlainText("text", itemData.getText1() +"\n"+itemData.getText2()+"\n"+"\n"+"#ئەپڵیکەیشنی_هەنبانەبۆرینە"+"\n");
             clipboardManager.setPrimaryClip(clipData);
             Toast.makeText(context, "کۆپی کرا", Toast.LENGTH_SHORT).show();
 
